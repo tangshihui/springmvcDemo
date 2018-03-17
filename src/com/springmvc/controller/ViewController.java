@@ -43,7 +43,6 @@ public class ViewController {
 
 		return mav;
 	}
-	
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ModelAndView add(HttpServletRequest request) {
@@ -55,7 +54,7 @@ public class ViewController {
 
 		p.setUserId(UUID.randomUUID());
 		p.setName(request.getParameter("username"));
-		p.setAge(Integer.valueOf(request.getParameter("age")).intValue() );
+		p.setAge(Integer.valueOf(request.getParameter("age")).intValue());
 		p.setAddress(request.getParameter("address"));
 
 		persons.add(p);
@@ -64,29 +63,28 @@ public class ViewController {
 
 		return mav;
 	}
-	
+
 	private void deleteUser(UUID userId) {
-		Iterator<Person> it=persons.iterator();
+		Iterator<Person> it = persons.iterator();
 		while (it.hasNext()) {
 			Person p = (Person) it.next();
 			if (p.getUserId().equals(userId)) {
 				it.remove();
 			}
-			
+
 		}
 	}
-	
+
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public String delete(HttpServletRequest request) {
-		
-		String userId=request.getParameter("userId");
-		if (userId!=null&&!userId.isEmpty()) {
-			UUID _userId=UUID.fromString(userId);
+
+		String userId = request.getParameter("userId");
+		if (userId != null && !userId.isEmpty()) {
+			UUID _userId = UUID.fromString(userId);
 			deleteUser(_userId);
 		} else {
 			return "redirect:/error";
 		}
-		
 
 		return "redirect:/index";
 	}
